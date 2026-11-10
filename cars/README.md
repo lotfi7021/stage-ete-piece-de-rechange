@@ -168,8 +168,8 @@ Toutes les commandes s'exécutent depuis le dossier applicatif **`cars/`**.
 
 ```bash
 # 1. Cloner le dépôt
-git clone https://github.com/lotfi7021/stage-ete-3eme-anne.git
-cd stage-ete-3eme-anne/cars
+git clone https://github.com/lotfi7021/stage-ete-piece-de-rechange.git
+cd stage-ete-piece-de-rechange/cars
 
 # 2. Installer les dépendances PHP
 composer install
