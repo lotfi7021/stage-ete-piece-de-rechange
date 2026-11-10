@@ -42,7 +42,7 @@
 - **SAV** via un système de tickets de support.
 - **Back-office** complet : dashboard, calendrier, gestion des comptes et contenus éditoriaux.
 
-Ce dépôt correspond à un **Projet de Fin d'Études (PFE)**. La documentation de durcissement est disponible dans [SECURITE.md](SECURITE.md) et le récapitulatif des optimisations dans [AMELIORATIONS.md](AMELIORATIONS.md).
+Ce dépôt correspond à un **Projet de Fin d'Études (PFE)**. La documentation de durcissement est disponible dans [SECURITE.md](cars/SECURITE.md) et le récapitulatif des optimisations dans [AMELIORATIONS.md](cars/AMELIORATIONS.md).
 
 ---
 
@@ -378,7 +378,7 @@ cars/
 
 ## Sécurité
 
-Les mesures de durcissement sont détaillées dans **[SECURITE.md](SECURITE.md)** :
+Les mesures de durcissement sont détaillées dans **[SECURITE.md](cars/SECURITE.md)** :
 
 - **CSRF** : middleware `VerifyCsrfToken` actif dans le groupe `web`, sans exception.
 - **Anti-brute-force** : rate limiter `login` (5 tentatives/minute par couple login + IP).
@@ -479,7 +479,7 @@ php artisan route:cache
 - **Environnement de production distinct** avec `APP_KEY` dédié et vérification TLS/HSTS réelle.
 - **Observabilité** : journalisation centralisée et suivi des erreurs en production.
 
-Le détail des optimisations déjà réalisées (sécurité, performance, qualité) est disponible dans [AMELIORATIONS.md](AMELIORATIONS.md).
+Le détail des optimisations déjà réalisées (sécurité, performance, qualité) est disponible dans [AMELIORATIONS.md](cars/AMELIORATIONS.md).
 
 ---
 
