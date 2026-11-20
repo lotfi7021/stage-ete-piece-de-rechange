@@ -32,7 +32,7 @@ class AuthSecurityTest extends TestCase
 
     public function test_guest_is_redirected_to_login_from_protected_pages(): void
     {
-        foreach (['/admin/list_machine', '/client/list_machine', '/admin/dashboardL', '/admin/list_commandeM'] as $url) {
+        foreach (['/admin/list_machine', '/client/list_machine', '/admin/dashboardL', '/admin/list_commandeM', '/admin/calendar'] as $url) {
             $this->get($url)->assertRedirect('/admin');
         }
     }

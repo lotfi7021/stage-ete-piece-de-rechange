@@ -78,6 +78,58 @@ public function statut_livre($id)
 
 
 
+public function calendarLivreur(Request $request)
+{
+    $titleSeo = 'Mon calendrier de livraisons';
+    $admin = Auth::guard('admin')->user();
+
+    $month = (string) $request->query('month', now()->format('Y-m'));
+
+    if (! preg_match('/^\d{4}-(0[1-9]|1[0-2])$/', $month)) {
+        $month = now()->format('Y-m');
+    }
+
+    $monthStart = Carbon::createFromFormat('!Y-m', $month)->locale('fr');
+    $monthEnd = $monthStart->copy()->endOfMonth();
+
+    $gridStart = $monthStart->copy()->startOfWeek(Carbon::MONDAY);
+    $gridEnd = $monthEnd->copy()->endOfWeek(Carbon::SUNDAY);
+
+    $commandes = CommandeM::with('client')
+        ->where('id_livreur', $admin->id)
+        ->whereBetween('date_livraison', [$gridStart->toDateString(), $gridEnd->toDateString()])
+        ->orderBy('date_livraison')
+        ->get();
+
+    $parJour = $commandes->groupBy(
+        fn ($commande) => Carbon::parse($commande->date_livraison)->toDateString()
+    );
+
+    $duMois = $commandes->filter(
+        fn ($commande) => Carbon::parse($commande->date_livraison)->betweenIncluded($monthStart, $monthEnd)
+    );
+
+    $compteurs = [
+        'en attente' => $duMois->where('etat', 'en attente')->count(),
+        'confirmée' => $duMois->where('etat', 'confirmée')->count(),
+        'Livrée' => $duMois->where('etat', 'Livrée')->count(),
+    ];
+
+    $jours = [];
+    for ($jour = $gridStart->copy(); $jour->lte($gridEnd); $jour->addDay()) {
+        $jours[] = $jour->copy();
+    }
+
+    $moisPrecedent = $monthStart->copy()->subMonthNoOverflow()->format('Y-m');
+    $moisSuivant = $monthStart->copy()->addMonthNoOverflow()->format('Y-m');
+
+    return view('back.livreur.calendar', compact(
+        'titleSeo', 'admin', 'monthStart', 'jours', 'parJour', 'compteurs', 'moisPrecedent', 'moisSuivant'
+    ));
+}
+
+
+
 public function create_commande()
 {
     $ref = 'pièce-'.Str::random(5);

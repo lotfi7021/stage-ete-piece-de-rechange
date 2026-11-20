@@ -25,6 +25,9 @@ class DashController extends Controller
 
         $nbTotal = null;
         $nbCommandes = null;
+        $nbClients = null;
+        $nbTickets = null;
+        $nbMessages = null;
 
         if ($isLivreur) {
             $scope = CommandeM::with('client')->where('id_livreur', $admin->id);

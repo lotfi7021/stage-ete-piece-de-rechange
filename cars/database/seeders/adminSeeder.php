@@ -22,7 +22,7 @@ class adminSeeder extends Seeder
         $accounts = [
             [
                 'login' => 'admin', 'role' => 'admin',
-                'nom' => 'Administrateur', 'prenom' => 'Principal',
+                'nom' => 'admin', 'prenom' => 'Principal',
                 'nom_de_la_societe' => 'Cars Admin', 'Email' => 'admin@cars.com',
                 'env' => 'SEED_ADMIN_PASSWORD',
             ],

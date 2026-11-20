@@ -11,6 +11,15 @@ use DataTables;
 
 class SupportController extends Controller
 {
+    public static function homeFor(?string $role): string
+    {
+        return match ($role) {
+            'client' => route('client.list_machine'),
+            'livreur' => route('dashboardL'),
+            default => route('dashboard'),
+        };
+    }
+
     public function adminlist_support(Request $request)
     {
         $titleSeo = 'Liste des Tickets';
@@ -58,13 +67,8 @@ class SupportController extends Controller
         Cache::forget('back.tickets.count');
 
         $role = Auth::guard('admin')->user()->role ?? null;
-        $target = match ($role) {
-            'client' => route('client.list_machine'),
-            'livreur' => route('dashboardL'),
-            default => route('dashboard'),
-        };
 
-        return redirect($target)->with('success', 'Réclamation confirmée ! Un e-mail récapitulatif des détails vous sera bientôt envoyé.');
+        return redirect(self::homeFor($role))->with('success', 'Réclamation confirmée ! Un e-mail récapitulatif des détails vous sera bientôt envoyé.');
     }
 
     public function destroy($id)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Front\DashController;
+use App\Http\Controllers\SupportController;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\StoreLivreurRequest;
@@ -21,11 +22,13 @@ class AdminController extends Controller
     {
         $titleSeo = 'Connexion - SelectCars';
 
-        if (!Auth::guard('admin')->check()) {
+        $admin = Auth::guard('admin')->user();
+
+        if (! $admin) {
             return view('back.admin_login', compact('titleSeo'));
-        } else {
-            return redirect()->route('admin.list_machine');
         }
+
+        return redirect()->to(SupportController::homeFor($admin->role));
     }
 
     public function login_functionality(Request $request)
@@ -39,16 +42,7 @@ class AdminController extends Controller
             $admin = Admin::where('login', $request->login)->first();
             Session::put('user', $admin->id);
 
-            switch ($admin->role) {
-                case 'admin':
-                    return redirect()->route('admin.list_machine');
-                case 'client':
-                    return redirect()->route('client.list_machine');
-                case 'livreur':
-                    return redirect()->route('dashboardL');
-                default:
-                    return redirect()->route('login.form');
-            }
+            return redirect()->to(SupportController::homeFor($admin->role));
         } else {
             Log::warning('Échec de connexion', [
                 'login' => $request->input('login'),

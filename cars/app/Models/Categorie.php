@@ -15,5 +15,6 @@ class Categorie extends Model
     'titre',
  
    ];
+   //lllllllll
 
 }

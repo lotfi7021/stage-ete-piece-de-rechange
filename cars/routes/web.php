@@ -200,6 +200,7 @@ Route::middleware(['admin', 'revalidate'])->group(function () {
      ───────────────────────────────────────────── */
     Route::middleware('role:livreur')->group(function () {
         Route::get('admin/dashboardL', [AdminController::class, 'dashboard'])->name('dashboardL');
+        Route::get('admin/calendar', [CommandeMachineController::class, 'calendarLivreur'])->name('livreur.calendar');
         Route::get('admin/list_commandeM/{id}/mark-as-delivered', [CommandeMachineController::class, 'statut_livre'])->name('admin.list_commandeM.markAsDelivered');
     });
 });

@@ -251,6 +251,14 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('livreur.calendar') }}"
+                           class="nav-link {{ request()->is('admin/calendar*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-calendar-alt"></i>
+                            <p>Mon calendrier</p>
+                        </a>
+                    </li>
+
                 @endcan
 
             </ul>
